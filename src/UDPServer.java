@@ -74,16 +74,14 @@ public class UDPServer {
                             sendBuffer = "Invalid command. Usage: /msg <username> <message>".getBytes();
                         } else {
                             String targetUser = commandParts[1];
-                            String message = "";
-                            for (int i = 2; i < commandParts.length - 1; i++) {
-                                message = commandParts[i] + " ";
-                            }
+                            String message = commandParts[2];
                             
                             InetSocketAddress targetAddress = users.get(targetUser);
                             if (targetAddress != null) {
                                 String msgToSend = "Message from " + getUsernameByAddress(clientAddress) + ": " + message;
                                 sendBuffer = msgToSend.getBytes();
                                 sendResponse(userSockets.get(targetAddress), sendBuffer, targetAddress);
+                                sendBuffer = "Message sent successfully".getBytes();
                             } else {
                                 sendBuffer = "User not found".getBytes();
                             }
